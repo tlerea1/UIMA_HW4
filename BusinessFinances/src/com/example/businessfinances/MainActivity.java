@@ -1,10 +1,16 @@
 package com.example.businessfinances;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -66,6 +72,7 @@ public class MainActivity extends TabActivity {
         this.currentTab = 0;
 
         tabHost.setCurrentTab(currentTab);
+        
 
     }
     
@@ -96,5 +103,51 @@ public class MainActivity extends TabActivity {
             currentTab = NUM_TABS - 1;
         }
         tabHost.setCurrentTab(currentTab);
+    }
+    
+    public void showAdd(View v){
+        AlertDialog.Builder builder = new AlertDialog.Builder(
+                this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View view = inflater.inflate(R.layout.add_layout, null);
+        builder.setView(view);
+        builder.setTitle("Add Entry");
+        builder
+                .setCancelable(false)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        EditText nameBox = (EditText) view.findViewById(R.id.addName);
+                        EditText valueBox = (EditText) view.findViewById(R.id.addCost);
+                        String name = nameBox.getText().toString();
+
+                        Double value = Double.parseDouble(valueBox.getText().toString());
+                        db.insertEntry(new Entry(name, value));
+                        String tab = getTabHost().getCurrentTabTag();
+                        Activity tabActivity1 = getLocalActivityManager().getActivity(tab);
+                        if(tabActivity1 != null){
+                            if(tabActivity1.getClass().getName().equals("AcendingActivity")){
+                                AcendingActivity acendingActivity = (AcendingActivity) getLocalActivityManager().getActivity(tab);
+                                acendingActivity.onResume();
+                            }
+                            if(tabActivity1.getClass().getName().equals("DecendingActivity")){
+                                DecendingActivity decendingActivity = (DecendingActivity) getLocalActivityManager().getActivity(tab);
+                                decendingActivity.onResume();
+                            }
+                            if(tabActivity1.getClass().getName().equals("AlphabeticalActivity")){
+                                AlphabeticalActivity alphabeticalActivity = (AlphabeticalActivity) getLocalActivityManager().getActivity(tab);
+                                alphabeticalActivity.onResume();
+                            }
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 }

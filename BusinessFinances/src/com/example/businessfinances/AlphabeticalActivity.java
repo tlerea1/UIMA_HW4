@@ -75,4 +75,10 @@ public class AlphabeticalActivity extends Activity {
         } while (cCursor.moveToNext());
         adapter.notifyDataSetChanged();
     }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateList();
+    }
 }

@@ -3,6 +3,8 @@ package com.example.businessfinances;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.MotionEvent;
@@ -12,31 +14,37 @@ import android.widget.ListView;
  
 public class AcendingActivity extends Activity {
     
+    private ArrayList<Entry> entries;
+    private ArrayAdapter<Entry> adapter;
+    private Cursor cCursor;
+    private Context context;
     private GestureDetectorCompat mDetector;
-
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_acending);
+        setContentView(R.layout.activity_alphabetical);
         
         SwipeListener swipeList = new SwipeListener();
         mDetector = new GestureDetectorCompat(this, swipeList);
 
-        ArrayList<String> strings = new ArrayList<String>();
-        strings.add("A");
-        strings.add("B");
-        strings.add("C");
-        ListView list = (ListView) findViewById(R.id.acending_list);
-        ArrayAdapter<String> adapter = new ArrayAdapterWrapper<String>(this, android.R.layout.simple_list_item_1, strings);
+        entries = new ArrayList<Entry>();
+        context = getApplicationContext();
+
+        
+        ListView list = (ListView) findViewById(R.id.alphabetical_list);
+        adapter = new ArrayAdapterWrapper<Entry>(this, android.R.layout.simple_list_item_1, entries);
         list.setAdapter(adapter);
         
-        list.setOnTouchListener(new View.OnTouchListener() {
+        populateList();
+        
+       list.setOnTouchListener(new View.OnTouchListener() {
             
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return onTouchEvent(event);
             }
         });
+        
     }
     
     @Override 
@@ -44,5 +52,30 @@ public class AcendingActivity extends Activity {
         this.mDetector.onTouchEvent(event);
         // Be sure to call the superclass implementation
         return super.onTouchEvent(event);
+    }
+    
+    public void populateList()
+    {
+        cCursor = MainActivity.db.getAcending();
+        startManagingCursor(cCursor);
+        updateArray();
+    }
+    
+    public void updateArray()
+    {
+        cCursor.requery();  // UPDATE OR RELOAD CURSOR?
+        entries.clear();
+        if (cCursor.moveToFirst())
+          do {
+             Entry result = new Entry(cCursor.getString(1), cCursor.getDouble(2));
+             entries.add(result);
+        } while (cCursor.moveToNext());
+        adapter.notifyDataSetChanged();
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateList();
     }
 }

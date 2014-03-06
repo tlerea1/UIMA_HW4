@@ -3,6 +3,8 @@ package com.example.businessfinances;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.MotionEvent;
@@ -13,23 +15,28 @@ import android.widget.TextView;
 
 public class DecendingActivity extends Activity {
     
+    private ArrayList<Entry> entries;
+    private ArrayAdapter<Entry> adapter;
+    private Cursor cCursor;
+    private Context context;
     private GestureDetectorCompat mDetector;
-
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_decending);   
-
+        setContentView(R.layout.activity_alphabetical);
+        
         SwipeListener swipeList = new SwipeListener();
         mDetector = new GestureDetectorCompat(this, swipeList);
+
+        entries = new ArrayList<Entry>();
+        context = getApplicationContext();
+
         
-        ArrayList<String> strings = new ArrayList<String>();
-        strings.add("C");
-        strings.add("B");
-        strings.add("A");
-        ListView list = (ListView) findViewById(R.id.decending_list);
-        ArrayAdapter<String> adapter = new ArrayAdapterWrapper<String>(this, android.R.layout.simple_list_item_1, strings);
+        ListView list = (ListView) findViewById(R.id.alphabetical_list);
+        adapter = new ArrayAdapterWrapper<Entry>(this, android.R.layout.simple_list_item_1, entries);
         list.setAdapter(adapter);
+        
+        populateList();
         
        list.setOnTouchListener(new View.OnTouchListener() {
             
@@ -38,6 +45,7 @@ public class DecendingActivity extends Activity {
                 return onTouchEvent(event);
             }
         });
+        
     }
     
     @Override 
@@ -45,5 +53,30 @@ public class DecendingActivity extends Activity {
         this.mDetector.onTouchEvent(event);
         // Be sure to call the superclass implementation
         return super.onTouchEvent(event);
+    }
+    
+    public void populateList()
+    {
+        cCursor = MainActivity.db.getDecending();
+        startManagingCursor(cCursor);
+        updateArray();
+    }
+    
+    public void updateArray()
+    {
+        cCursor.requery();  // UPDATE OR RELOAD CURSOR?
+        entries.clear();
+        if (cCursor.moveToFirst())
+          do {
+             Entry result = new Entry(cCursor.getString(1), cCursor.getDouble(2));
+             entries.add(result);
+        } while (cCursor.moveToNext());
+        adapter.notifyDataSetChanged();
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateList();
     }
 }

@@ -20,9 +20,9 @@ public class SwipeListener implements GestureDetector.OnGestureListener {
     @Override
     public boolean onFling(MotionEvent arg0, MotionEvent arg1, float velocityX,
             float velocityY) {
-        if (velocityY > Y_SENSITIVITY) {
-            return true;
-        }
+//        if (velocityY > Y_SENSITIVITY || velocityY < -Y_SENSITIVITY) {
+//            return true;
+//        }
         
         if (velocityX > 0) {
             MainActivity.switchTabRight();
