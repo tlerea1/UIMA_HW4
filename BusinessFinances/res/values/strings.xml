@@ -4,5 +4,8 @@
     <string name="app_name">Business Finances</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_alphabetical">AlphabeticalActivity</string>
+    <string name="title_activity_acending">AcendingActivity</string>
+    <string name="title_activity_decending">DecendingActivity</string>
 
 </resources>

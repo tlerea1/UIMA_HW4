@@ -22,6 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.businessfinances.DecendingActivity"
+            android:label="@string/title_activity_decending" >
+        </activity>
+        <activity
+            android:name="com.example.businessfinances.AlphabeticalActivity"
+            android:label="@string/title_activity_alphabetical" >
+        </activity>
+        <activity
+            android:name="com.example.businessfinances.AcendingActivity"
+            android:label="@string/title_activity_acending" >
+        </activity>
     </application>
 
 </manifest>
