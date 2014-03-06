@@ -126,15 +126,15 @@ public class MainActivity extends TabActivity {
                         String tab = getTabHost().getCurrentTabTag();
                         Activity tabActivity1 = getLocalActivityManager().getActivity(tab);
                         if(tabActivity1 != null){
-                            if(tabActivity1.getClass().getName().equals("AcendingActivity")){
+                            if(tabActivity1 instanceof AcendingActivity){
                                 AcendingActivity acendingActivity = (AcendingActivity) getLocalActivityManager().getActivity(tab);
                                 acendingActivity.onResume();
                             }
-                            if(tabActivity1.getClass().getName().equals("DecendingActivity")){
+                            if(tabActivity1 instanceof DecendingActivity){
                                 DecendingActivity decendingActivity = (DecendingActivity) getLocalActivityManager().getActivity(tab);
                                 decendingActivity.onResume();
                             }
-                            if(tabActivity1.getClass().getName().equals("AlphabeticalActivity")){
+                            if(tabActivity1 instanceof AlphabeticalActivity){
                                 AlphabeticalActivity alphabeticalActivity = (AlphabeticalActivity) getLocalActivityManager().getActivity(tab);
                                 alphabeticalActivity.onResume();
                             }

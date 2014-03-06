@@ -17,7 +17,7 @@ public class dbAdapter {
     private final Context context;
 
     private static final String DB_NAME = "ent.db";
-    private static final int DB_VERSION = 2;  // added semester, when you add or delete fields, you must update the version number!
+    private static final int DB_VERSION = 3;  // added semester, when you add or delete fields, you must update the version number!
 
     private static final String ENTRY_TABLE = "courses";
     public static final String ENT_ID = "ent_id";   // column 0

@@ -6,7 +6,7 @@ import android.view.MotionEvent;
 
 public class SwipeListener implements GestureDetector.OnGestureListener {
 
-    private final float Y_SENSITIVITY = 2;
+    private final float Y_SENSITIVITY = 300;
     
     public SwipeListener() {
 
@@ -18,18 +18,19 @@ public class SwipeListener implements GestureDetector.OnGestureListener {
     }
 
     @Override
-    public boolean onFling(MotionEvent arg0, MotionEvent arg1, float velocityX,
+    public boolean onFling(MotionEvent e0, MotionEvent e1, float velocityX,
             float velocityY) {
-//        if (velocityY > Y_SENSITIVITY || velocityY < -Y_SENSITIVITY) {
-//            return true;
-//        }
+        if (velocityY > Y_SENSITIVITY || velocityY < -Y_SENSITIVITY) {
+            return true;
+        }
         
-        if (velocityX > 0) {
+        if (e0.getX() < e1.getX()) {
             MainActivity.switchTabRight();
         } else {
             MainActivity.switchTabLeft();
         }
         return true;
+        
     }
 
     @Override
