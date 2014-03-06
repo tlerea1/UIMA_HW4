@@ -65,8 +65,12 @@ public class dbAdapter {
     }
 
     // database query methods
-    public Cursor getAllCourses() {
+    public Cursor getAllEntries() {
         return db.query(ENTRY_TABLE, ENT_COLS, null, null, null, null, null);
+    }
+    
+    public Cursor getAlphabetical() {
+        return db.query(ENTRY_TABLE, ENT_COLS, null, null, null, null, ENT_NAME);
     }
 
     public Cursor getCourseCursor(long ri) throws SQLException {

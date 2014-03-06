@@ -37,7 +37,7 @@ public class AlphabeticalActivity extends Activity {
     
     public void populateList()
     {
-        cCursor = MainActivity.db.getAllCourses();
+        cCursor = MainActivity.db.getAlphabetical();
         startManagingCursor(cCursor);
         updateArray();
     }
@@ -47,7 +47,6 @@ public class AlphabeticalActivity extends Activity {
  //     cCursor = dbAdapt.getAllCourses();
         cCursor.requery();  // UPDATE OR RELOAD CURSOR?
         entries.clear();
-        float totalCredits = 0;
         if (cCursor.moveToFirst())
           do {
              Entry result = new Entry(cCursor.getString(1), cCursor.getDouble(2));
