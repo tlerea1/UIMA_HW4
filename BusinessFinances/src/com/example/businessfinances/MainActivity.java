@@ -40,14 +40,14 @@ public class MainActivity extends TabActivity {
         Intent intentAlphabetical = new Intent().setClass(this, AlphabeticalActivity.class);
         TabSpec tabSpecAlphabetical = tabHost
                 .newTabSpec("Alphabetical")
-                .setIndicator("alphabetical")
+                .setIndicator("Alphabetical")
                 .setContent(intentAlphabetical);
 
         // Apple tab
         Intent intentAcending = new Intent().setClass(this, AcendingActivity.class);
         TabSpec tabSpecAcending = tabHost
                 .newTabSpec("Acending")
-                .setIndicator("acending")
+                .setIndicator("Acending")
 
                 .setContent(intentAcending);
 
@@ -55,7 +55,7 @@ public class MainActivity extends TabActivity {
         Intent intentDecending = new Intent().setClass(this, DecendingActivity.class);
         TabSpec tabSpecDecending = tabHost
                 .newTabSpec("Decending")
-                .setIndicator("decending")
+                .setIndicator("Decending")
 
                 .setContent(intentDecending);
 

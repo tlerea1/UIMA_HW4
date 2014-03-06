@@ -19,7 +19,6 @@ public class AlphabeticalActivity extends Activity {
     private ArrayList<Entry> entries;
     private ArrayAdapter<Entry> adapter;
     private Cursor cCursor;
-    private Context context;
     private GestureDetectorCompat mDetector;
 
     
@@ -31,11 +30,10 @@ public class AlphabeticalActivity extends Activity {
         mDetector = new GestureDetectorCompat(this, swipeList);
 
         entries = new ArrayList<Entry>();
-        context = getApplicationContext();
 
         
         ListView list = (ListView) findViewById(R.id.alphabetical_list);
-        adapter = new ArrayAdapterWrapper<Entry>(this, android.R.layout.simple_list_item_1, entries);
+        adapter = new ArrayAdapterWrapper(this, android.R.layout.simple_list_item_1, entries);
         list.setAdapter(adapter);
         
         populateList();
