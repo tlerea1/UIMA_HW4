@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GestureDetectorCompat;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
  
@@ -17,22 +20,41 @@ public class AlphabeticalActivity extends Activity {
     private ArrayAdapter<Entry> adapter;
     private Cursor cCursor;
     private Context context;
+    private GestureDetectorCompat mDetector;
+
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alphabetical);
         
+        SwipeListener swipeList = new SwipeListener();
+        mDetector = new GestureDetectorCompat(this, swipeList);
 
         entries = new ArrayList<Entry>();
         context = getApplicationContext();
 
         
         ListView list = (ListView) findViewById(R.id.alphabetical_list);
-        adapter = new ArrayAdapter<Entry>(this, android.R.layout.simple_list_item_1, entries);
+        adapter = new ArrayAdapterWrapper<Entry>(this, android.R.layout.simple_list_item_1, entries);
         list.setAdapter(adapter);
         
         populateList();
         
+       list.setOnTouchListener(new View.OnTouchListener() {
+            
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return onTouchEvent(event);
+            }
+        });
+        
+    }
+    
+    @Override 
+    public boolean onTouchEvent(MotionEvent event){ 
+        this.mDetector.onTouchEvent(event);
+        // Be sure to call the superclass implementation
+        return super.onTouchEvent(event);
     }
     
     public void populateList()
