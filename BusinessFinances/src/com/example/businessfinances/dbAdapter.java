@@ -72,7 +72,15 @@ public class dbAdapter {
     public Cursor getAlphabetical() {
         return db.query(ENTRY_TABLE, ENT_COLS, null, null, null, null, ENT_NAME);
     }
+    
+    public Cursor getAcending() {
+        return db.query(ENTRY_TABLE, ENT_COLS, null, null, null, null, ENT_PRICE);
+    }
 
+    public Cursor getDecending() {
+        return db.query(ENTRY_TABLE, ENT_COLS, null, null, null, null, ENT_PRICE + " DESC");
+    }
+    
     public Cursor getCourseCursor(long ri) throws SQLException {
         Cursor result = db.query(true, ENTRY_TABLE, ENT_COLS, ENT_ID+"="+ri, null, null, null, null, null);
         if ((result.getCount() == 0) || !result.moveToFirst()) {

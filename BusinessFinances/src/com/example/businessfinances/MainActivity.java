@@ -30,7 +30,6 @@ public class MainActivity extends TabActivity implements GestureDetector.OnGestu
 
 //        db.insertEntry(new Entry("test", 10));
 
-        Resources ressources = getResources(); 
         tabHost = getTabHost(); 
 
         // Android tab

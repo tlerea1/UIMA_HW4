@@ -44,7 +44,6 @@ public class AlphabeticalActivity extends Activity {
     
     public void updateArray()
     {
- //     cCursor = dbAdapt.getAllCourses();
         cCursor.requery();  // UPDATE OR RELOAD CURSOR?
         entries.clear();
         if (cCursor.moveToFirst())
