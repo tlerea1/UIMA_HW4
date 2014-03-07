@@ -63,11 +63,6 @@ public class dbAdapter {
         cvalue.put(ENT_PRICE, pc);
         return db.update(ENTRY_TABLE, cvalue, ENT_ID+"="+ri, null) > 0;
     }
-
-    // database query methods
-    public Cursor getAllEntries() {
-        return db.query(ENTRY_TABLE, ENT_COLS, null, null, null, null, null);
-    }
     
     public Cursor getAlphabetical() {
         return db.query(ENTRY_TABLE, ENT_COLS, null, null, null, null, ENT_NAME);

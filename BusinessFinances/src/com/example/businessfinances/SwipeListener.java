@@ -6,7 +6,7 @@ import android.view.MotionEvent;
 
 public class SwipeListener implements GestureDetector.OnGestureListener {
 
-    private final float Y_SENSITIVITY = 300;
+    private final float Y_SENSITIVITY = 70;
     
     public SwipeListener() {
 
@@ -20,11 +20,18 @@ public class SwipeListener implements GestureDetector.OnGestureListener {
     @Override
     public boolean onFling(MotionEvent e0, MotionEvent e1, float velocityX,
             float velocityY) {
-        if (velocityY > Y_SENSITIVITY || velocityY < -Y_SENSITIVITY) {
+        double yDiff = e0.getY() - e1.getY();
+        if (yDiff > Y_SENSITIVITY || yDiff < -Y_SENSITIVITY) {
             return true;
         }
         
-        if (e0.getX() < e1.getX()) {
+//        if (e0.getX() < e1.getX()) {
+//            MainActivity.switchTabRight();
+//        } else {
+//            MainActivity.switchTabLeft();
+//        }
+        
+        if (velocityX > 0) {
             MainActivity.switchTabRight();
         } else {
             MainActivity.switchTabLeft();
@@ -40,9 +47,8 @@ public class SwipeListener implements GestureDetector.OnGestureListener {
     }
 
     @Override
-    public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,
-            float arg3) {
-        // TODO Auto-generated method stub
+    public boolean onScroll(MotionEvent e0, MotionEvent e1, float diffX,
+            float diffY) {
         return false;
     }
 
